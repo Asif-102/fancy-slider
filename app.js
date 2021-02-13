@@ -15,16 +15,25 @@ const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 
 // show images 
 const showImages = (images) => {
-  imagesArea.style.display = 'block';
-  gallery.innerHTML = '';
-  // show gallery title
-  galleryHeader.style.display = 'flex';
-  images.forEach(image => {
-    let div = document.createElement('div');
-    div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
-    div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
-    gallery.appendChild(div)
-  })
+  console.log(images.length);
+  if (images.length === 0) {
+    document.getElementById('found').style.display = 'none';
+    document.getElementById('not-found').innerHTML = `<h3 class="text-center">Not found ... :(</h3>`;
+  }
+  else {
+    document.getElementById('not-found').innerHTML = '';
+    imagesArea.style.display = 'block';
+    gallery.innerHTML = '';
+    // show gallery title
+    galleryHeader.style.display = 'flex';
+    images.forEach(image => {
+      let div = document.createElement('div');
+      div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
+      div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
+      gallery.appendChild(div)
+    })
+    document.getElementById('not-found').style.display='block';
+  }
 
 }
 
@@ -32,14 +41,14 @@ const getImages = (query) => {
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
-    .catch(err => console.log(err))
+    .catch(error => console.log(error))
 }
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
   element.classList.add('added');
- 
+
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
@@ -55,7 +64,7 @@ const createSlider = () => {
     return;
   }
   let duration = document.getElementById('duration').value || 1000;
-  if(duration < 1000){
+  if (duration < 1000) {
     alert("You have to select minimum 1000 millisecond ...");
     return;
   }
@@ -115,7 +124,6 @@ const changeSlide = (index) => {
 }
 
 searchBtn.addEventListener('click', function () {
-  console.log("clicked");
   document.querySelector('.main').style.display = 'none';
   clearInterval(timer);
   const search = document.getElementById('search');
