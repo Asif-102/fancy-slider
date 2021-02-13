@@ -54,6 +54,11 @@ const createSlider = () => {
     alert('Select at least 2 image.')
     return;
   }
+  let duration = document.getElementById('duration').value || 1000;
+  if(duration < 1000){
+    alert("You have to select minimum 1000 millisecond ...");
+    return;
+  }
   // crate slider previous next area
   sliderContainer.innerHTML = '';
   const prevNext = document.createElement('div');
@@ -67,7 +72,7 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  const duration = document.getElementById('duration').value || 1000;
+  duration = document.getElementById('duration').value || 1000;
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
