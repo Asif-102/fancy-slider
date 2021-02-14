@@ -33,7 +33,7 @@ const showImages = (images) => {
       div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
       gallery.appendChild(div)
     })
-    document.getElementById('not-found').style.display='block';
+    document.getElementById('not-found').style.display = 'block';
     toogleSpinner();
   }
 
@@ -50,15 +50,15 @@ const getImages = (query) => {
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
-  element.classList.add('added');
+  element.classList.toggle("added");
 
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
   } else {
-    alert('Hey, Already added !')
+    sliders.splice(item, 1);
   }
-}
+};
 var timer
 const createSlider = () => {
   // check slider image length
@@ -126,10 +126,10 @@ const changeSlide = (index) => {
 }
 
 //Search box enter key 
-document.getElementById('search').addEventListener("keyup", function(event) {
+document.getElementById('search').addEventListener("keyup", function (event) {
   if (event.keyCode === 13) {
-   event.preventDefault();
-   document.getElementById('search-btn').click();
+    event.preventDefault();
+    document.getElementById('search-btn').click();
   }
 });
 
@@ -149,7 +149,7 @@ sliderBtn.addEventListener('click', function () {
 
 //toogle spinner
 
-const toogleSpinner = () =>{
+const toogleSpinner = () => {
   const spinner = document.getElementById('loading-spinner');
   // console.log(spinner.classList);
   // if(show){
