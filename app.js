@@ -15,10 +15,11 @@ const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 
 // show images 
 const showImages = (images) => {
-  console.log(images.length);
+  // console.log(images.length);
   if (images.length === 0) {
     document.getElementById('found').style.display = 'none';
     document.getElementById('not-found').innerHTML = `<h3 class="text-center">Not found ... :(</h3>`;
+    toogleSpinner();
   }
   else {
     document.getElementById('not-found').innerHTML = '';
@@ -33,11 +34,13 @@ const showImages = (images) => {
       gallery.appendChild(div)
     })
     document.getElementById('not-found').style.display='block';
+    toogleSpinner();
   }
 
 }
 
 const getImages = (query) => {
+  toogleSpinner();
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
@@ -96,7 +99,6 @@ const createSlider = () => {
     changeSlide(slideIndex);
   }, duration);
 }
-
 // change slider index 
 const changeItem = index => {
   changeSlide(slideIndex += index);
@@ -142,5 +144,19 @@ searchBtn.addEventListener('click', function () {
 })
 
 sliderBtn.addEventListener('click', function () {
-  createSlider()
+  createSlider();
 })
+
+//toogle spinner
+
+const toogleSpinner = () =>{
+  const spinner = document.getElementById('loading-spinner');
+  // console.log(spinner.classList);
+  // if(show){
+  //   spinner.classList.remove('d-none');
+  // }
+  // else{
+  //   spinner.classList.add('d-none');
+  // }
+  spinner.classList.toggle('d-none');
+}
