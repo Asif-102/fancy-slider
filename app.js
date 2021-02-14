@@ -123,6 +123,16 @@ const changeSlide = (index) => {
   items[index].style.display = "block"
 }
 
+//Search box enter key 
+document.getElementById('search').addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById('search-btn').click();
+  }
+});
+
+
+
 searchBtn.addEventListener('click', function () {
   document.querySelector('.main').style.display = 'none';
   clearInterval(timer);
